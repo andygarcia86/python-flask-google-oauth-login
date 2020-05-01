@@ -18,6 +18,6 @@ RUN rm -R requirements.txt
 
 COPY /app /app
 
-ENTRYPOINT [ "python" ]
+# ENTRYPOINT [ "python" ]
 
-CMD [ "/app/app.py" ]
+# CMD [ "/app/app.py" ]

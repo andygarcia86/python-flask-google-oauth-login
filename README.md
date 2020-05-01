@@ -1,4 +1,4 @@
-# Python flask google oauth login
+# Python Flask Google oauth login
 
 Sample demo for login in Python flask application using a google account
 
@@ -18,8 +18,15 @@ Sample demo for login in Python flask application using a google account
 
 ## Setup Using Docker
 
-1. Open terminal
-2. Move to `flask_web` folder running `cd flask_web`
+- Debugging:
+  docker-compose -f docker-compose.yml -f docker-compose-debugpy.yml up --build
+
+- Development:
+  docker-compose -f docker-compose.yml up --build
+
+
+1. Open terminal or CMD console
+2. Move to `flask` folder running `cd flask` command
 3. Run `docker build -t flask-login-google:latest .`
 4. Run `docker run -d -p 5000:5000 flask-login-google`
 5. Open browser and navigate to `http://127.0.0.1:5000`
@@ -27,5 +34,5 @@ Sample demo for login in Python flask application using a google account
 ## References
 
 1. [Real Python - Flask google login](https://realpython.com/flask-google-login/)
-2. [Dockerize Flask Application](https://runnable.com/docker/python/dockerize-your-flask-application)
+2. [Docker Flask Application](https://runnable.com/docker/python/dockerize-your-flask-application)
 3. [Serving HTML files with Flask](https://pythonise.com/series/learning-flask/rendering-html-files-with-flask)
