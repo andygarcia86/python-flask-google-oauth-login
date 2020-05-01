@@ -2,7 +2,7 @@
 
 Sample demo for login in Python flask application using a google account
 
-## Requirments
+## Requirements
 
 1. Python 3.4+
 2. Docker
@@ -10,10 +10,22 @@ Sample demo for login in Python flask application using a google account
 
 ## Setup
 
-1. Run `pip install -r requirements.txt` in the CMD using a Administrator account
-2. Run `python app.py` in the CMD 
+1. Open CMD with Administrator privileges
+2. Move to the root folder of the project
+1. Run `pip install -r requirements.txt` (Only the first time)
+2. Run `python app.py` in the CMD
+3. Open browser and navigate to `https://127.0.0.1:5000`
 
+## Setup Using Docker
+
+1. Open terminal
+2. Move to `flask_web` folder running `cd flask_web`
+3. Run `docker build -t flask-login-google:latest .`
+4. Run `docker run -d -p 5000:5000 flask-login-google`
+5. Open browser and navigate to `http://127.0.0.1:5000`
 
 ## References
 
 1. [Real Python - Flask google login](https://realpython.com/flask-google-login/)
+2. [Dockerize Flask Application](https://runnable.com/docker/python/dockerize-your-flask-application)
+3. [Serving HTML files with Flask](https://pythonise.com/series/learning-flask/rendering-html-files-with-flask)

@@ -12,6 +12,7 @@ from flask_login import (
     login_user,
     logout_user,
 )
+
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
@@ -23,7 +24,6 @@ from user import User
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
-
 
 # Flask app setup
 app = Flask(__name__)
@@ -49,7 +49,7 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 def load_user(user_id):
     return User.get(user_id)
 
-# Homepage 
+# Homepage
 @app.route("/")
 def index():
     if current_user.is_authenticated:
@@ -66,7 +66,7 @@ def index():
 
 # Login
 def get_google_provider_cfg():
-    return requests.get(GOOGLE_DISCOVERY_URL).json()        
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
 
 @app.route("/login")
 def login():
@@ -83,7 +83,7 @@ def login():
     )
     return redirect(request_uri)
 
-# Login Callback    
+# Login Callback
 @app.route("/login/callback")
 def callback():
     # Get authorization code Google sent back to you
@@ -141,14 +141,14 @@ def callback():
     login_user(user)
 
     # Send user back to homepage
-    return redirect(url_for("index"))    
+    return redirect(url_for("index"))
 
 # Logout
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("index"))    
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")    
+    app.run(ssl_context="adhoc")
