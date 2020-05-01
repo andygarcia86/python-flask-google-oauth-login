@@ -11,7 +11,7 @@ Sample demo for login in Python flask application using a google account
 ## Setup
 
 1. Run `pip install -r requirements.txt` in the CMD using a Administrator account
-2. 
+2. Run `python app.py` in the CMD 
 
 
 ## References
