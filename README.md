@@ -18,12 +18,8 @@ Sample demo for login in Python flask application using a google account
 
 ## Setup Using Docker
 
-- Debugging:
-  docker-compose -f docker-compose.yml -f docker-compose-debugpy.yml up --build
-
-- Development:
-  docker-compose -f docker-compose.yml up --build
-
+- Debugging: `docker-compose -f docker-compose.yml -f docker-compose-debugpy.yml up --build`
+- Development: `docker-compose -f docker-compose.yml up --build`
 
 1. Open terminal or CMD console
 2. Move to `flask` folder running `cd flask` command
