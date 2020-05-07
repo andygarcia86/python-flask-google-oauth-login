@@ -21,8 +21,8 @@ from db import init_db_command
 from user import User
 
 # Configuration
-GOOGLE_CLIENT_ID = "685281190912-qjks00h5gi3sg134672rduhq66a4fi1g.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET = "OPRD2fzXEqHkdfENIUxvPqkB"
+GOOGLE_CLIENT_ID = ""
+GOOGLE_CLIENT_SECRET = ""
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
 
