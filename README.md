@@ -10,15 +10,18 @@ Sample demo for login in Python flask application using a google account
 
 ## Setup
 
-1. Open CMD with Administrator privileges
-2. Move to the root folder of the project
-1. Run `pip install -r requirements.txt` (Only the first time)
-2. Run `python app.py` in the CMD
-3. Open browser and navigate to `https://127.0.0.1:5000`
+1. Open a browser and navigate to `https://console.developers.google.com/apis/credentials?pli=1`
+2. Create a new Id in `OAuth 2.0 Client IDs`
+3. Copy and update in the env file the `Client ID` and the `Client secret`
+4. Open CMD with Administrator privileges
+5. Move to the root folder of the project
+6. Run `pip install -r requirements.txt` (Only the first time)
+7. Run `python app.py` in the CMD
+8. Open browser and navigate to `https://127.0.0.1:5000`
 
 ## Setup Using Docker
 
-- Debugging: `docker-compose -f docker-compose.yml -f docker-compose-debugpy.yml up --build`
+- Debugging: `docker-compose -f docker-compose.yml -f docker-compose-debug-py.yml up --build`
 - Development: `docker-compose -f docker-compose.yml up --build`
 
 1. Open terminal or CMD console
