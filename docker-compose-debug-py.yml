@@ -10,6 +10,8 @@ services:
             - FLASK_APP=app/server:create_app
             - FLASK_ENV=development
             - FLASK_DEBUG=1
+            - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+            - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
         ports:
             - 6678:6678
         volumes:

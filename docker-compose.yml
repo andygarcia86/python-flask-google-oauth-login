@@ -6,6 +6,9 @@ services:
             context: ./flask/
         image: flask:latest
         container_name: sample-flask-login-google
+        environment:
+            - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+            - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
         restart: always
         expose:
             - 5000
