@@ -5,7 +5,7 @@ import sqlite3
 import sys
 
 # Third-party libraries
-from flask import Flask, redirect, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for
 from flask_login import (
     LoginManager,
     current_user,
@@ -21,8 +21,8 @@ from db import init_db_command
 from user import User
 
 # Configuration
-GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
-GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
+GOOGLE_CLIENT_ID = "685281190912-qjks00h5gi3sg134672rduhq66a4fi1g.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "OPRD2fzXEqHkdfENIUxvPqkB"
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
 
@@ -50,43 +50,24 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 def load_user(user_id):
     return User.get(user_id)
 
-# Homepage 
+
+# Homepage
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        # return "current_user.is_authenticated"
-
-        return (
-            "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
-            '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
-            )
+        return render_template(
+            "index.html",
+            user_name=current_user.name,
+            user_email=current_user.email,
+            user_profile_pic=current_user.profile_pic,
         )
     else:
-        return '<a class="button" href="/login">Google Login</a>'
-
-@app.route("/profile")
-def profile():
-    if current_user.is_authenticated:
-        # return "current_user.is_authenticated"
-
-
-
-        return (
-            "<p>Hello Profile, {}! You're logged in! Email: {}</p><p>Session: {}</p>"
-            '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, session["a"]
-            )
-        )
-    else:
-        return '<a class="button" href="/login">Google Login</a>'
-
+        return render_template("login.html")
 
 # Login
 def get_google_provider_cfg():
-    return requests.get(GOOGLE_DISCOVERY_URL).json()        
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
+
 
 @app.route("/login")
 def login():
@@ -102,44 +83,33 @@ def login():
         scope=["openid", "email", "profile"],
     )
 
-    session["a"] = "123"
-
     return redirect(request_uri)
 
-# Login Callback    
+
+# Login Callback
 @app.route("/login/callback")
 def callback():
     # Get authorization code Google sent back to you
     code = request.args.get("code")
 
-    result = "<p>Code: " + code + "</p>"
+    result = "<p>code: " + code + "</p>"
 
     google_provider_cfg = get_google_provider_cfg()
     token_endpoint = google_provider_cfg["token_endpoint"]
-
-    result = result + "<p>token_endpoint: " + token_endpoint + "</p>"
-
 
     # Prepare and send a request to get tokens! Yay tokens!
     token_url, headers, body = client.prepare_token_request(
         token_endpoint,
         authorization_response=request.url,
         redirect_url=request.base_url,
-        code=code
+        code=code,
     )
-
-    result = result + "<p>token_url: " + token_url + "</p>"
-    # result = result + "<p>headers: " + headers + "</p>"
-    result = result + "<p>body: " + body + "</p>"
-
     token_response = requests.post(
         token_url,
         headers=headers,
         data=body,
         auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
     )
-
-    result = result + "<p>token_response: " + token_response.text + "</p>"
 
     # Parse the tokens!
     client.parse_request_body_response(json.dumps(token_response.json()))
@@ -168,9 +138,7 @@ def callback():
 
     # Create a user in your db with the information provided
     # by Google
-    user = User(
-        id_=unique_id, name=users_name, email=users_email, profile_pic=picture
-    )
+    user = User(id_=unique_id, name=users_name, email=users_email, profile_pic=picture)
 
     # Doesn't exist? Add it to the database.
     if not User.get(unique_id):
@@ -180,22 +148,16 @@ def callback():
     login_user(user)
 
     # Send user back to homepage
-    return redirect(url_for("index"))    
+    return redirect(url_for("index"))
+
 
 # Logout
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("index"))    
+    return redirect(url_for("index"))
+
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")    
-
-
-"""
-
-TODO: 
- - Add to the Readme file the google URL for remove the grant access to applications: https://myaccount.google.com/permissions?gar=1
-
-"""
+    app.run(ssl_context="adhoc", port=5001)
