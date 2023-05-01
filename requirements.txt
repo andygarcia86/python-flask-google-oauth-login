@@ -1,7 +1,7 @@
 flake8
 black
 requests==2.21.0
-Flask==1.0.2
+Flask==2.3.2
 oauthlib==3.0.1
 pyOpenSSL==19.0.0
 Flask-Login==0.4.1
